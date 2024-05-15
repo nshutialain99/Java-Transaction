@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Transaction Tracker</title>
+</head>
+<body>
+    <input type="text" name="search" id="search" placeholder="Search">
+    <div class="container-form">
+        <form action="" name="transcationForm">
+            <input type="text" name="Uname" id="Uname" placeholder="Your Name">
+            <input type="number" name="amount" id="amount" placeholder="Amount">
+            <input type="text" name="payement" id="payement" placeholder="Send/Receive">
+            <button type="button" onclick="addTransaction()">Submit</button>
+        </form>
+    </div>
+    <div class="container-table">
+        <table id="transactionTable" class="table" border="3px" cellpadding="5px" cellspacing="10px">
+            <tr>
+                <th>Name</th>
+                <th>Amount Transfered</th>
+                <th>Type</th>
+                <th>Time</th>
+                <th>User ID</th>
+            </tr>
+            <tbody>
+    
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function addTransaction(){
+            let Name = document.transcationForm.Uname.value;
+            let amount = document.transcationForm.amount.value;
+            let payement =document.transcationForm.payement.value;
+        
+            function now(){
+                return new Date(+(new Date())- Math.floor(Math.random()*10000000000));
+            }
+            (new now()).toLocaleDateString("en-US");
+        
+            function id(){
+            let chars = '1234567890';
+            let charsLength = chars.length;
+        
+            let id = '';
+        
+            for (let i = 0; i < charsLength; i++) {
+                id += chars.charAt(Math.floor(Math.random() * charsLength));
+            }
+            return id;
+            }  
+        
+            let tr = document.createElement('tr')
+        
+            let td1 = tr.appendChild(document.createElement('td'))
+            let td2 = tr.appendChild(document.createElement('td'))
+            let td3 = tr.appendChild(document.createElement('td'))
+            let td4 = tr.appendChild(document.createElement('td'))
+            let td5 = tr.appendChild(document.createElement('td'))
+        
+            td1.innerHTML = Name;
+            td2.innerHTML = amount;
+            td3.innerHTML = payement;
+            td4.innerHTML = now();
+            td5.innerHTML = id();
+        
+            document.getElementById('transactionTable').appendChild(tr)
+        }
+        
+        document.getElementById('search').addEventListener('keyup', function searchTransactions(searchTerm) {
+            const transactionTable = document.getElementById('transactionTable');
+            const rows = transactionTable.getElementsByTagName('tr');
+          
+            for (let i = 0; i < rows.length; i++) {
+              const row = rows[i];
+              const cells = row.getElementsByTagName('td');
+          
+              let matchFound = false;
+          
+              for (let j = 0; j < cells.length; j++) {
+                const cell = cells[j];
+          
+                if (cell.innerText.includes(searchTerm)) {
+                  matchFound = true;
+                  break;
+                }
+              }
+          
+              if (!matchFound) {
+                row.style.display = 'none';
+              } else {
+                row.style.display = '';
+              }
+            }
+        })
+    </script>
+</body>
+</html>
